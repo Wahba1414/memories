@@ -1,30 +1,40 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-class HomeScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Home!</Text>
-      </View>
-    );
-  }
-}
+import Memory from './src/screens/new_memory'
+import Memories from './src/screens/memories'
 
-class SettingsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Settings!</Text>
-      </View>
-    );
+
+const getTabBarIcon = (navigation, focused, tintColor) => {
+  // You can return any component that you like here!
+  const { routeName } = navigation.state;
+  var iconName;
+
+  if (routeName === 'Home') {
+    iconName = 'home'
+    
+  } else if (routeName === 'Add') {
+    iconName = 'plus';
   }
-}
+
+  return <Icon name={iconName} size={25} color={tintColor} />;
+};
 
 const TabNavigator = createBottomTabNavigator({
-  Home: { screen: HomeScreen },
-  Settings: { screen: SettingsScreen },
+  Home: { screen: Memories },
+  Add : { screen: Memory },
+},
+{
+  defaultNavigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({ focused, tintColor }) =>
+      getTabBarIcon(navigation, focused, tintColor),
+  }),
+  tabBarOptions: {
+    activeTintColor: 'tomato',
+    inactiveTintColor: 'gray',
+  },
 });
 
 export default createAppContainer(TabNavigator);
