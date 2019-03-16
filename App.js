@@ -13,9 +13,8 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
   var iconName;
 
   if (routeName === 'Home') {
-    iconName = 'home'
-    
-  } else if (routeName === 'Add') {
+    iconName = 'image'
+  } else if (routeName === 'New Memory') {
     iconName = 'plus';
   }
 
@@ -23,8 +22,8 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
 };
 
 const TabNavigator = createBottomTabNavigator({
-  Home: { screen: Memories },
-  Add : { screen: Memory },
+  'Home': { screen: Memories },
+  'New Memory' : { screen: Memory },
 },
 {
   defaultNavigationOptions: ({ navigation }) => ({
@@ -32,8 +31,9 @@ const TabNavigator = createBottomTabNavigator({
       getTabBarIcon(navigation, focused, tintColor),
   }),
   tabBarOptions: {
-    activeTintColor: 'tomato',
+    activeTintColor: '#584EAF',
     inactiveTintColor: 'gray',
+    showLabel: true
   },
 });
 
