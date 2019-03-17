@@ -18,7 +18,7 @@ class Memories extends Component{
   render() {
     return (
       <Container>
-        <Header style={styles['Container']}>
+        <Header style={styles['Container']} androidStatusBarColor={colors.MAIN_COLOR}>
           <Body>
             <Title style={styles['Title']}>
               All Memories
