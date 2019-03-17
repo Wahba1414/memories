@@ -1,9 +1,15 @@
 //Importing from react.
 import React, {Component} from 'react';
 //Importing from React-Native.
-import {StyleSheet,ScrollView,View} from 'react-native';
+import {StyleSheet,ScrollView,View,Image} from 'react-native';
 //Importing from native-base.
-import { Container, Header, Title, Content,Right, Body,Text,Form,Item,DatePicker,Textarea, Input} from 'native-base';
+import { Container, Header, Title, Content,Right, Body,Text,Form,
+  Item,DatePicker,Textarea, Input, Button, Icon
+} from 'native-base';
+
+//image picker.
+var ImagePicker = require('react-native-image-picker');
+
 
 // Import config styles.
 import colors from '../config/styles';
@@ -15,12 +21,57 @@ class New_Memory extends Component{
   
   constructor(props) {
     super(props);
-    this.state = { chosenDate: new Date() };
+    
+    this.state = { 
+      chosenDate: new Date(),
+      filePath: {} 
+    };
+  
     this.setDate = this.setDate.bind(this);
   }
 
+  //Date picker.
   setDate(newDate) {
     this.setState({ chosenDate: newDate });
+  }
+
+
+  //Pick up an image.
+  chooseFile = () => {
+    var options = {
+      title: 'Select Image',
+      customButtons: [
+        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.showImagePicker(options, response => {
+      console.log('Response = ', response);
+ 
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        let source = response;
+        // You can also display the image using data:
+        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+        this.setState({
+          filePath: source,
+        });
+      }
+    });
+  };
+
+
+  keepMemory = () => {
+    console.log('keep a new memory');
   }
 
   render() {
@@ -38,30 +89,41 @@ class New_Memory extends Component{
         <Content>
           <ScrollView>
             {/* Uploading image */}
-            <View>
-              <Text>
-                Upload an Image.
-              </Text>
+            <View style={styles['Center-View']}>
+              
+              {this.state.filePath.data && <View style={styles['Image-View']}>
+                <Image
+                  source={{
+                    uri: 'data:image/jpeg;base64,' + this.state.filePath.data,
+                  }}
+                  style={{width: 150, height: 200 }}
+                />
+              </View>}
+              
+              <Button onPress={this.chooseFile.bind(this)} style={styles['Pick-Up-Image-Button']} bordered iconLeft>
+                <Icon style={{color: colors.MAIN_COLOR}} name='images' />
+                <Text placeholderTextColor={colors.MAIN_COLOR} style={styles['Input']}>Choose an Image</Text>
+              </Button>
             </View>
 
             {/* Memory details */}
             <View>
             <Form>
               <View style={styles['Memory-Details-View']}>
-                <Item rounded style={styles['Item']}>
+                <Item rounded style={[styles['Item'],{height: 40}]}>
                   <Input placeholderTextColor={colors.MAIN_COLOR} style={styles['Input']} placeholder='Memory Title'/>
                 </Item>
                 
-                <Item rounded style={styles['Item']}>
-                  <Input placeholderTextColor={colors.MAIN_COLOR} style={styles['Input']} placeholder='Place Name'/>
+                <Item rounded style={[styles['Item'],{height: 40}]}>
+                  <Input placeholderTextColor={colors.MAIN_COLOR} style={[styles['Input']]} placeholder='Place Name'/>
                 </Item>
 
                 {/* Write how you feel ;) */}
-                <Textarea placeholderTextColor={colors.MAIN_COLOR} style={[styles['Item'],styles['Input']]} rowSpan={4} bordered placeholder="How You Feel ;)" />
+                <Textarea placeholderTextColor={colors.MAIN_COLOR} style={[styles['Item']]} rowSpan={4} bordered placeholder="How You Feel ;)" />
               </View>
 
               {/* Date picker */}
-              <View style={styles['Date-Picker-View']}>
+              <View style={styles['Center-View']}>
                 <DatePicker
                 defaultDate={new Date()}
                 locale={"en"}
@@ -77,7 +139,14 @@ class New_Memory extends Component{
                 />
               
               </View>
-
+              
+              <View style={styles['Center-View']}>
+                <Button onPress={this.keepMemory()} style={styles['Keep-Memory-Button']} bordered iconLeft>
+                  <Icon style={{color: colors.MAIN_COLOR}} name='bookmark' />
+                  <Text placeholderTextColor={colors.MAIN_COLOR} style={styles['Input']}>Keep it</Text>
+                </Button>
+              </View>
+              
 
             </Form>
             </View>
@@ -102,20 +171,40 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
   },
-  'Date-Picker-View':{
-    marginLeft: 5,
-    marginRight: 5,
+  'Center-View':{
+    marginLeft: 20,
+    marginRight: 20,
     flex:1,
-    alignItems:'center'
+    alignSelf: 'center',
+    marginBottom: 10,
+    marginTop: 10,
   },
   
   'Item':{
     marginBottom: 10,
-    borderColor: colors.MAIN_COLOR
+    borderColor: colors.MAIN_COLOR,
   },
 
   'Input':{
-    // color: MAIN_COLOR, 
+    color: colors.MAIN_COLOR, 
+  },
+
+  'Pick-Up-Image-Button':{
+    backgroundColor: 'white',
+    width: '60%',
+    borderColor: colors.MAIN_COLOR
+  },
+
+  'Image-View' :{
+    marginBottom: 10,
+    flex:1,
+    alignSelf: 'center',
+  },
+
+  'Keep-Memory-Button':{
+    backgroundColor: 'white',
+    width: '40%',
+    borderColor: colors.MAIN_COLOR
   }
 
 
