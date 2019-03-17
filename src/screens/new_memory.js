@@ -40,9 +40,6 @@ class New_Memory extends Component{
   chooseFile = () => {
     var options = {
       title: 'Select Image',
-      customButtons: [
-        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-      ],
       storageOptions: {
         skipBackup: true,
         path: 'images',
@@ -102,7 +99,7 @@ class New_Memory extends Component{
               
               <Button onPress={this.chooseFile.bind(this)} style={styles['Pick-Up-Image-Button']} bordered iconLeft>
                 <Icon style={{color: colors.MAIN_COLOR}} name='images' />
-                <Text placeholderTextColor={colors.MAIN_COLOR} style={styles['Input']}>Choose an Image</Text>
+                <Text placeholderTextColor={colors.MAIN_COLOR} style={styles['Input']}>Select Image</Text>
               </Button>
             </View>
 

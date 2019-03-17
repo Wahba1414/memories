@@ -1,3 +1,3 @@
 export default colors = {
-    MAIN_COLOR: 'tomato'
+    MAIN_COLOR: '#7B68EE'
 }
