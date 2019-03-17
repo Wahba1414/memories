@@ -26,8 +26,8 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
 
 //setup the tab bar navigator.
 const TabNavigator = createBottomTabNavigator({
-  'New Memory' : { screen: Memory },
   'Home': { screen: Memories },
+  'New Memory' : { screen: Memory },
 },
 {
   defaultNavigationOptions: ({ navigation }) => ({
