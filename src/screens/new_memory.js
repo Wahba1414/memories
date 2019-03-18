@@ -1,7 +1,7 @@
 //Importing from react.
 import React, {Component} from 'react';
 //Importing from React-Native.
-import {StyleSheet,ScrollView,View,Image} from 'react-native';
+import {StyleSheet,ScrollView,View,Image,Dimensions} from 'react-native';
 //Importing from native-base.
 import { Container, Header, Title, Content,Right, Body,Text,Form,
   Item,DatePicker,Textarea, Input, Button, Icon
@@ -10,6 +10,13 @@ import { Container, Header, Title, Content,Right, Body,Text,Form,
 //image picker.
 var ImagePicker = require('react-native-image-picker');
 
+// Get in the dimension of the window.
+var {height, width} = Dimensions.get('window');
+
+var imageWidth = Math.round(width * 0.8);
+var imageHeight= Math.round(imageWidth * 3 / 4);
+
+console.log('imageWidth: ' , imageWidth , ',imageHeight: ' , imageHeight);
 
 // Import config styles.
 import colors from '../config/styles';
@@ -24,11 +31,39 @@ class New_Memory extends Component{
     
     this.state = { 
       chosenDate: new Date(),
-      filePath: {} 
+      filePath: {}, 
     };
   
     this.setDate = this.setDate.bind(this);
   }
+
+  updateDiemsnions = () => {
+    //NEED_TEST
+    console.log('Dimension changed');
+    // Get in the dimension of the window.
+    height =  Dimensions.get('window').height;
+    width =  Dimensions.get('window').width;
+
+    // update the image diemensions.
+    imageWidth = Math.round(width * 0.8);
+    imageHeight= Math.round(imageWidth * 3 / 4);
+
+    console.log('imageWidth: ' , imageWidth , ',imageHeight: ' , imageHeight);
+  }
+
+  // React LifeCycle hooks.
+  componentDidMount() {
+    //Add an event for dimension changes.
+    Dimensions.addEventListener('change', this.updateDiemsnions)
+  }
+
+  // avoid the memory leakge which not handled.
+  componentWillUnmount() {
+    //Unset the Diemension event listener.
+    console.log('Inside the unmount function');
+    Dimensions.removeEventListener('change',this.updateDiemsnions);
+  }
+
 
   //Date picker.
   setDate(newDate) {
@@ -93,7 +128,7 @@ class New_Memory extends Component{
                   source={{
                     uri: 'data:image/jpeg;base64,' + this.state.filePath.data,
                   }}
-                  style={{width: 150, height: 200 }}
+                  style={{width: imageWidth, height: imageHeight }}
                 />
               </View>}
               
@@ -176,35 +211,28 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
   },
-  
   'Item':{
     marginBottom: 10,
     borderColor: colors.MAIN_COLOR,
   },
-
   'Input':{
     color: colors.MAIN_COLOR, 
   },
-
   'Pick-Up-Image-Button':{
     backgroundColor: 'white',
     width: '60%',
     borderColor: colors.MAIN_COLOR
   },
-
   'Image-View' :{
     marginBottom: 10,
     flex:1,
     alignSelf: 'center',
   },
-
   'Keep-Memory-Button':{
     backgroundColor: 'white',
     width: '40%',
     borderColor: colors.MAIN_COLOR
   }
-
-
 });
   
 
