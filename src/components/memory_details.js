@@ -3,8 +3,7 @@ import React, {Component} from 'react';
 //Importing from React-Native.
 import {StyleSheet,View} from 'react-native';
 //Importing from native-base.
-import {Text,Form,
-  Item,DatePicker,Textarea, Input, Button, Icon
+import {Text,Form,Item,DatePicker,Textarea, Input, Button, Icon
 } from 'native-base';
 
 // Import config styles.

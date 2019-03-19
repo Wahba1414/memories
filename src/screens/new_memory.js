@@ -1,10 +1,9 @@
 //Importing from react.
 import React, {Component} from 'react';
 //Importing from React-Native.
-import {StyleSheet,ScrollView,View,Dimensions} from 'react-native';
+import {StyleSheet,ScrollView} from 'react-native';
 //Importing from native-base.
-import { Container, Header, Title, Content,Right, Body,Text,Form,
-  Item,DatePicker,Textarea, Input, Button, Icon
+import { Container, Header, Title, Content,Right, Body
 } from 'native-base';
 
 //image picker.
@@ -18,7 +17,7 @@ import MemoryDetails from '../components/memory_details'
 import colors from '../config/styles';
 
 
-class New_Memory extends Component{
+class NewMemory extends Component{
   static navigationOptions = {
     title: 'New Memory',
   };
@@ -109,4 +108,4 @@ const styles = StyleSheet.create({
 });
   
 
-export default New_Memory;
+export default NewMemory;
