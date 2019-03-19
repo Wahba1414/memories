@@ -3,11 +3,14 @@ import React, {Component} from 'react';
 //Importing from React-Native.
 import {StyleSheet,ScrollView} from 'react-native';
 //Importing from native-base.
-import { Container, Header, Title, Content,Right, Body
+import { Container, Header, Title, Content,Right, Body, Left,Icon,Drawer,Button
 } from 'native-base';
 
 //image picker.
 var ImagePickerAPI = require('react-native-image-picker');
+
+// Import screens.
+import SideBar from './drawer';
 
 // Import components.
 import ImagePicker from '../components/image_picker'
@@ -71,28 +74,45 @@ class NewMemory extends Component{
     console.log('keep a new memory');
   }
 
+  // Drawer.
+  closeDrawer = () => {
+    this._drawer._root.close();
+  }
+  openDrawer = () => {
+      this._drawer._root.open();
+  }
+
   render() {
     return (
-      <Container>
-        <Header style={styles['Container']} androidStatusBarColor={colors.MAIN_COLOR}>
-          <Body>
-            <Title style={styles['Title']}>
-              New Memory
-            </Title>
-          </Body>
-          <Right />
-        </Header>
-        
-        <Content>
-          <ScrollView>
-            {/* Uploading image */}
-            <ImagePicker imagePath={this.state.imagePath} chooseImage={this.chooseImage}></ImagePicker>
-            {/* Memory details */}
-            <MemoryDetails setDate={this.setDate} keepMemory={this.keepMemory}></MemoryDetails>
-          </ScrollView>
-        </Content>
-        
-      </Container>
+      <Drawer
+      ref={(ref) => { this._drawer = ref; }}
+      content={<SideBar />} >
+        <Container>
+          <Header style={styles['Container']} androidStatusBarColor={colors.MAIN_COLOR}>
+            <Left>
+              <Button transparent onPress={this.openDrawer.bind(this)}>
+                <Icon name='menu'  />
+              </Button>
+            </Left>
+            <Body>
+              <Title style={styles['Title']}>
+                New Memory
+              </Title>
+            </Body>
+            <Right />
+          </Header>
+          
+          <Content>
+            <ScrollView>
+              {/* Uploading image */}
+              <ImagePicker imagePath={this.state.imagePath} chooseImage={this.chooseImage}></ImagePicker>
+              {/* Memory details */}
+              <MemoryDetails setDate={this.setDate} keepMemory={this.keepMemory}></MemoryDetails>
+            </ScrollView>
+          </Content>
+          
+        </Container>
+      </Drawer>
     );
   }
 }
