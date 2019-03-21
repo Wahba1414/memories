@@ -17,15 +17,15 @@ class MemoryDetails extends Component{
                 <Form>
                     <View style={styles['Memory-Details-View']}>
                         <Item rounded style={[styles['Item'],{height: 40}]}>
-                        <Input placeholderTextColor={colors.MAIN_COLOR} style={styles['Input']} placeholder='Memory Title'/>
+                        <Input onChangeText={(value) => this.props.onChangeText('Title', value)} id='Title' placeholderTextColor={colors.MAIN_COLOR} style={styles['Input']} placeholder='Memory Title'/>
                         </Item>
                         
                         <Item rounded style={[styles['Item'],{height: 40}]}>
-                        <Input placeholderTextColor={colors.MAIN_COLOR} style={[styles['Input']]} placeholder='Place Name'/>
+                        <Input onChangeText={(value) => this.props.onChangeText('Place', value)} id='Place' placeholderTextColor={colors.MAIN_COLOR} style={[styles['Input']]} placeholder='Place Name'/>
                         </Item>
 
                         {/* Write how you feel ;) */}
-                        <Textarea placeholderTextColor={colors.MAIN_COLOR} style={[styles['Item']]} rowSpan={4} bordered placeholder="How You Feel ;)" />
+                        <Textarea onChangeText={(value) => this.props.onChangeText('Description', value)} id='Description' placeholderTextColor={colors.MAIN_COLOR} style={[styles['Item']]} rowSpan={4} bordered placeholder="How You Feel ;)" />
                     </View>
 
                     {/* Date picker */}

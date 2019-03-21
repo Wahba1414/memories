@@ -34,19 +34,17 @@ class NewMemory extends Component{
     super(props);
     
     this.state = { 
+      //Memory Image.
+      imagePath: {},
+      // Memory Details.
       chosenDate: new Date(),
-      imagePath: {}, 
+      title: '',
+      place: '',
+      description: ''
     };
+  }
+
   
-    this.setDate = this.setDate.bind(this);
-  }
-
-  //Date picker.
-  setDate(newDate) {
-    console.log('Inside setDate function');
-    this.setState({ chosenDate: newDate });
-  }
-
   //Pick up an image.
   chooseImage = () => {
     console.log('Inside chooseImage function');
@@ -75,17 +73,53 @@ class NewMemory extends Component{
     });
   };
 
-  keepMemory = () => {
-    console.log('keep a new memory');
-    this.props.addMemory({name:'I Love You'})
-  }
-
   // Drawer.
   closeDrawer = () => {
     this._drawer._root.close();
   }
   openDrawer = () => {
       this._drawer._root.open();
+  }
+
+  // Memory details.
+  // Inputs changed.
+  onChangeText  = (target,text) => {
+    switch(target){
+      case 'Title':
+        this.setState({
+          title: text,
+        });
+        break;
+      
+      case 'Place':
+        this.setState({
+          place: text,
+        });
+        break;
+
+      case 'Description':
+        this.setState({
+          description: text,
+        });
+        break;  
+    }
+  }
+
+  //Date picker.
+  setDate = (newDate) => {
+    console.log('Inside setDate function');
+    this.setState({ chosenDate: newDate });
+  }
+
+  keepMemory = () => {
+    console.log('keep a new memory');
+    this.props.addMemory({
+      title: this.state.title,
+      place: this.state.place,
+      description: this.state.description,
+      date: this.state.chosenDate,
+      image: this.state.imagePath.data || ''
+    });
   }
 
   render() {
@@ -113,7 +147,7 @@ class NewMemory extends Component{
               {/* Uploading image */}
               <ImagePicker imagePath={this.state.imagePath} chooseImage={this.chooseImage}></ImagePicker>
               {/* Memory details */}
-              <MemoryDetails setDate={this.setDate} keepMemory={this.keepMemory}></MemoryDetails>
+              <MemoryDetails onChangeText={this.onChangeText} setDate={this.setDate} keepMemory={this.keepMemory}></MemoryDetails>
             </ScrollView>
           </Content>
           
