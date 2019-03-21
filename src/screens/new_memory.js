@@ -5,9 +5,14 @@ import {StyleSheet,ScrollView} from 'react-native';
 //Importing from native-base.
 import { Container, Header, Title, Content,Right, Body, Left,Icon,Drawer,Button
 } from 'native-base';
+// Import from react-redux.
+import {connect} from 'react-redux';
 
 //image picker.
 var ImagePickerAPI = require('react-native-image-picker');
+
+//Import actions.
+import * as Actions from '../redux/actions/index';
 
 // Import screens.
 import SideBar from './drawer';
@@ -72,6 +77,7 @@ class NewMemory extends Component{
 
   keepMemory = () => {
     console.log('keep a new memory');
+    this.props.addMemory({name:'I Love You'})
   }
 
   // Drawer.
@@ -128,4 +134,10 @@ const styles = StyleSheet.create({
 });
   
 
-export default NewMemory;
+const mapDispatchToProps = dispatch => {
+  return {
+    addMemory: (memory) => dispatch(Actions.addMemory(memory)), 
+  };
+}
+
+export default connect(null,mapDispatchToProps)(NewMemory);

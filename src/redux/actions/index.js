@@ -1,0 +1,3 @@
+export {
+    addMemory
+} from './memories';

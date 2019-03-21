@@ -1,4 +1,6 @@
+// Importing from React.
 import React from 'react';
+
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -8,6 +10,8 @@ import Memories from './src/screens/memories'
 
 // Import config styles.
 import colors from './src/config/styles';
+
+
 
 //Function to get the proper icon.
 const getTabBarIcon = (navigation, focused, tintColor) => {

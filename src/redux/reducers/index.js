@@ -1,0 +1,4 @@
+export {
+    memories
+} from './memories';
+
