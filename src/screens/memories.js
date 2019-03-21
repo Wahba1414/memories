@@ -1,10 +1,12 @@
 // Importing from React.
 import React, {Component} from 'react';
 // Importing from React Native.
-import {Platform, StyleSheet,Image} from 'react-native';
+import {Platform, StyleSheet,Image,FlatList} from 'react-native';
 //Importing from native-base.
 import { Card,CardItem, Container, Header, Title, Content, Body,Text,Left,Drawer,Button,Icon,Right
 } from 'native-base';
+// Import from react-redux.
+import {connect} from 'react-redux';
 
 // Import screens.
 import SideBar from './drawer';
@@ -27,6 +29,7 @@ class Memories extends Component{
   }
 
   render() {
+    // console.log('this.props.memories: ' , this.props.memories[0])
     return (
       <Drawer
       ref={(ref) => { this._drawer = ref; }}
@@ -48,27 +51,37 @@ class Memories extends Component{
           
           <Content style={styles['Content']}>
             {/* should use 'FlatList' when add functionalities */}
-            <Card style={styles['Card']}>
-              <CardItem>
-                <Left>
-                  <Body>
-                    <Text style={styles['Title']}>Memory Title</Text>
-                    <Text style={styles['Text']} note>Place Name</Text>
-                    <Text style={styles['Text']} note>April 15, 2016</Text>
-                  </Body>
-                </Left>
-              </CardItem>
+            <FlatList
+            data={this.props.memories}
+            renderItem={ ({item}) => (
+                <Card style={styles['Card']}>
+                  <CardItem>
+                    <Left>
+                      <Body>
+                        <Text style={styles['Title']}>{item.title}</Text>
+                        <Text style={styles['Text']} note>{item.place}</Text>
+                        <Text style={styles['Text']} note>{item.date}</Text>
+                      </Body>
+                    </Left>
+                  </CardItem>
 
-              <CardItem>
-                <Body>
-                  <Image source={{uri: 'Image URL'}} style={{height: 150, width: 150, flex: 1}}/>
-                  <Text style={styles['Text']}>
-                    The day when i promise her..
-                  </Text>
-                </Body>
-              </CardItem>
+                  <CardItem>
+                    <Body>
+                      <Image
+                        source={{
+                        uri: 'data:image/jpeg;base64,' + item.image,
+                        }}
+                        style={{width: 250, height: 150 }}
+                      />
+                      <Text style={styles['Text']}>
+                        {item.description}
+                      </Text>
+                    </Body>
+                  </CardItem>
 
-            </Card>
+              </Card>
+              )  
+            } />
           </Content>
         
         </Container>
@@ -104,4 +117,17 @@ const styles = StyleSheet.create({
 });
   
 
-export default Memories;
+const mapStateToProps = state => {
+  return {
+    memories: state.memories.memories,
+  }
+}
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+     
+  };
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Memories);

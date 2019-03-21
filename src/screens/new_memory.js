@@ -117,8 +117,9 @@ class NewMemory extends Component{
       title: this.state.title,
       place: this.state.place,
       description: this.state.description,
-      date: this.state.chosenDate,
-      image: this.state.imagePath.data || ''
+      date: (this.state.chosenDate).toString(),
+      image: this.state.imagePath.data || '',
+      key: (new Date()).toString()
     });
   }
 
