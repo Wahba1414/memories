@@ -7,6 +7,8 @@ import { Container, Header, Title, Content,Right, Body, Left,Icon,Drawer,Button
 } from 'native-base';
 // Import from react-redux.
 import {connect} from 'react-redux';
+// moment.
+import Moment from 'moment';
 
 //image picker.
 var ImagePickerAPI = require('react-native-image-picker');
@@ -117,7 +119,7 @@ class NewMemory extends Component{
       title: this.state.title,
       place: this.state.place,
       description: this.state.description,
-      date: (this.state.chosenDate).toString(),
+      date: (Moment(this.state.chosenDate).format('YYYY-MM-DD')).toString(),
       image: this.state.imagePath.data || '',
       key: (new Date()).toString()
     });
